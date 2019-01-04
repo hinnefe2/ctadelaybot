@@ -30,6 +30,6 @@ def is_in_s3(alert):
     """Check if an alert is already saved in S3."""
 
     alert_id = alert.get('AlertId')
-    bucket = boto3.resource('s3').Bucket('alethiomoji-processed-ids')
+    bucket = boto3.resource('s3').Bucket(S3_BUCKET)
 
     return alert_id in [obj.key for obj in bucket.objects.all()]
