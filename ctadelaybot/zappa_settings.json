@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "app_function": "main.scrape_api",
+        "profile_name": "default",
+        "project_name": "ctadelaybot",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-u8ogljob5",
+        "apigateway_enabled": false,
+        "events": [{
+            "function": "main.scrape_api",
+            "expression": "rate(5 minutes)"
+        }]
+    }
+}
