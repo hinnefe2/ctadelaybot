@@ -1,8 +1,9 @@
 """This module contains functions to interact with the CTA alerts API."""
 
+import datetime as dt
 import requests
 
-from glom import glom, Coalesce
+from glom import glom, Coalesce, Literal
 
 
 CTA_ALERTS_URI = "http://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON"  # noqa
@@ -27,7 +28,10 @@ def _parse_api_response(resp_json):
                # for each entry in CTAAlerts.Alert pull out the following info
                {'AlertId': 'AlertId',
                 'ShortDescription': 'ShortDescription',
+                'FullDescription': 'FullDescription',
                 'Impact': 'Impact',
+                'SeverityScore': 'SeverityScore',
+                'LastSeen': Literal(dt.datetime.utcnow().isoformat()),
                 'EventStart': Coalesce('EventStart', default=None),
                 'EventEnd': Coalesce('EventEnd', default=None),
 

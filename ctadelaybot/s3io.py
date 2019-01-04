@@ -22,7 +22,7 @@ def write_to_s3(alert):
         with open(filename, 'w') as outfile:
             json.dump(alert, outfile, indent=2)
 
-        boto3.resources('s3').meta.client.upload_file(
+        boto3.resource('s3').meta.client.upload_file(
                 filename, S3_BUCKET, alert_id)
 
 
