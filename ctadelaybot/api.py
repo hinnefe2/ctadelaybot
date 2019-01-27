@@ -1,12 +1,26 @@
 """This module contains functions to interact with the CTA alerts API."""
 
 import datetime as dt
+import pytz
 import requests
+
+from dateutil.parser import parse
 
 from glom import glom, Coalesce, Literal
 
 
 CTA_ALERTS_URI = "http://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON"  # noqa
+
+
+def _chicago_to_utc(timestamp):
+    """Convert a Chicago timestamp to a UTC timestamp."""
+
+    if timestamp is None:
+        return None
+
+    return (parse(timestamp).astimezone(pytz.timezone('America/Chicago'))
+                            .astimezone(pytz.UTC)
+                            .isoformat())
 
 
 def _query_api(uri=CTA_ALERTS_URI):
@@ -31,9 +45,12 @@ def _parse_api_response(resp_json):
                 'FullDescription': 'FullDescription',
                 'Impact': 'Impact',
                 'SeverityScore': 'SeverityScore',
-                'LastSeen': Literal(dt.datetime.utcnow().isoformat()),
-                'EventStart': Coalesce('EventStart', default=None),
-                'EventEnd': Coalesce('EventEnd', default=None),
+                'LastSeen': Literal(dt.datetime.utcnow()
+                                      .astimezone(pytz.UTC).isoformat()),
+                'EventStart': Coalesce(('EventStart', _chicago_to_utc),
+                                       default=None),
+                'EventEnd': Coalesce(('EventEnd', _chicago_to_utc),
+                                     default=None),
 
                 # pull out each entry in ImpactedService if there are multiple
                 'ImpactedService': (
