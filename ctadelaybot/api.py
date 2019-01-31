@@ -18,9 +18,10 @@ def _chicago_to_utc(timestamp):
     if timestamp is None:
         return None
 
-    return (parse(timestamp).astimezone(pytz.timezone('America/Chicago'))
-                            .astimezone(pytz.UTC)
-                            .isoformat())
+    return (pytz.timezone('America/Chicago')
+                .localize(parse(timestamp))
+                .astimezone(pytz.UTC)
+                .isoformat())
 
 
 def _query_api(uri=CTA_ALERTS_URI):
@@ -45,8 +46,9 @@ def _parse_api_response(resp_json):
                 'FullDescription': 'FullDescription',
                 'Impact': 'Impact',
                 'SeverityScore': 'SeverityScore',
-                'LastSeen': Literal(dt.datetime.utcnow()
-                                      .astimezone(pytz.UTC).isoformat()),
+                'LastSeen': Literal(pytz.UTC
+                                        .localize(dt.datetime.utcnow())
+                                        .isoformat()),
                 'EventStart': Coalesce(('EventStart', _chicago_to_utc),
                                        default=None),
                 'EventEnd': Coalesce(('EventEnd', _chicago_to_utc),
