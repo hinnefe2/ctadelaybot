@@ -1,0 +1,141 @@
+swagger: "2.0"
+info:
+  description: A RESTful API for retrieving CTA train delay alerts
+  version: "0.1.1"
+  title: CTA train delay alert API
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+definitions:
+  Alert:
+    type: object
+    properties:
+      AlertId:
+        type: integer
+      EventEnd:
+        type: string
+      EventStart:
+        type: string
+      FullDescription:
+        type: string
+      Impact:
+        type: integer
+      ImpactedService:
+        type: array
+        items:
+          type: object
+          properties:
+            ServiceId:
+              type: string
+            ServiceName:
+              type: string
+            ServiceType:
+              type: string
+            ServiceTypeDescription:
+              type: string
+      LastSeen:
+        type: string
+      SeverityScore:
+        type: integer
+      ShortDescription:
+        type: string
+
+paths:
+
+  /alerts:
+    get:
+      operationId: "alerts.read_many"
+      summary: "Read multiple alerts"
+      description: "Read multiple alerts"
+      parameters:
+        - in: query
+          name: since
+          required: false
+          type: integer
+          minimum: 0
+          description: The earliest alert_id to consider when returning results.
+        - in: query
+          name: offset
+          required: false
+          type: integer
+          minimum: 0
+          description: The number of items to skip before starting to collect the result set.
+        - in: query
+          name: limit
+          required: false
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+          description: The numbers of items to return.
+      responses:
+        200:
+          description: "Successful read alert list"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Alert'
+        404:
+          description: "Could not find alert the specified alert"
+
+  /alerts/{alert_id}:
+    get:
+      operationId: "alerts.read_one"
+      summary: "Read one alert from the alerts list"
+      description: "Read one alert from the alerts list"
+      parameters:
+        - in: path
+          name: alert_id 
+          required: True
+          type: integer
+          description: "ID of the alert to retrieve"
+      responses:
+        200:
+          description: "Successfully read alert"
+          schema:
+            $ref: '#/definitions/Alert'
+
+  /alerts/{alert_id}/edits/{edit_num}:
+    get:
+      operationId: "alerts.read_one_edit"
+      summary: "Read one alert edit from the alerts list"
+      description: "Read one alert edit from the alerts list"
+      parameters:
+        - in: path
+          name: alert_id 
+          required: True
+          type: integer
+          description: "ID of the alert to retrieve"
+        - in: path
+          name: edit_num 
+          required: True
+          type: integer
+          description: "Edit number of the alert to retrieve"
+      responses:
+        200:
+          description: "Successfully read alert edit version"
+          schema:
+            $ref: '#/definitions/Alert'
+
+  /alerts/{alert_id}/edits:
+    get:
+      operationId: "alerts.read_all_edits"
+      summary: "Read all edits of an alert from the alerts list"
+      description: "Read all edits of an alert from the alerts list"
+      parameters:
+        - in: path
+          name: alert_id 
+          required: True
+          type: integer
+          description: "ID of the alert to retrieve"
+      responses:
+        200:
+          description: "Successfully all read alert edit versions"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Alert'
