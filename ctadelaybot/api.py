@@ -41,11 +41,11 @@ def _parse_api_response(resp_json):
     spec = ('CTAAlerts.Alert', [
 
                # for each entry in CTAAlerts.Alert pull out the following info
-               {'AlertId': 'AlertId',
+               {'AlertId': ('AlertId', int),
                 'ShortDescription': 'ShortDescription',
-                'FullDescription': 'FullDescription',
+                'FullDescription': 'FullDescription.#cdata-section',
                 'Impact': 'Impact',
-                'SeverityScore': 'SeverityScore',
+                'SeverityScore': ('SeverityScore', int),
                 'LastSeen': Literal(pytz.UTC
                                         .localize(dt.datetime.utcnow())
                                         .isoformat()),
