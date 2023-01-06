@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CTA Delays</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+    <style>
+      body {
+        background-image: url("background.png");
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <!-- Example `[version]`: `2.x` -->
+    <script src="https://unpkg.com/javascript-time-ago@2.5.9/bundle/javascript-time-ago.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    
+    <script>
+      TimeAgo.addDefaultLocale({
+        locale: 'en-IL',
+        long: {
+            year: {
+                previous: "last year",
+                current: "this year",
+                next: "next year",
+                past: {
+                    one: "{0} year ago",
+                    other: "{0} years ago"
+                },
+                future: {
+                    one: "in {0} year",
+                    other: "in {0} years"
+                }
+            },
+            quarter: {
+                previous: "last quarter",
+                current: "this quarter",
+                next: "next quarter",
+                past: {
+                    one: "{0} quarter ago",
+                    other: "{0} quarters ago"
+                },
+                future: {
+                    one: "in {0} quarter",
+                    other: "in {0} quarters"
+                }
+            },
+            month: {
+                previous: "last month",
+                current: "this month",
+                next: "next month",
+                past: {
+                    one: "{0} month ago",
+                    other: "{0} months ago"
+                },
+                future: {
+                    one: "in {0} month",
+                    other: "in {0} months"
+                }
+            },
+            week: {
+                previous: "last week",
+                current: "this week",
+                next: "next week",
+                past: {
+                    one: "{0} week ago",
+                    other: "{0} weeks ago"
+                },
+                future: {
+                    one: "in {0} week",
+                    other: "in {0} weeks"
+                }
+            },
+            day: {
+                previous: "yesterday",
+                current: "today",
+                next: "tomorrow",
+                past: {
+                    one: "{0} day ago",
+                    other: "{0} days ago"
+                },
+                future: {
+                    one: "in {0} day",
+                    other: "in {0} days"
+                }
+            },
+            hour: {
+                current: "this hour",
+                past: {
+                    one: "{0} hour ago",
+                    other: "{0} hours ago"
+                },
+                future: {
+                    one: "in {0} hour",
+                    other: "in {0} hours"
+                }
+            },
+            minute: {
+                current: "this minute",
+                past: {
+                    one: "{0} minute ago",
+                    other: "{0} minutes ago"
+                },
+                future: {
+                    one: "in {0} minute",
+                    other: "in {0} minutes"
+                }
+            },
+            second: {
+                current: "now",
+                past: {
+                    one: "{0} second ago",
+                    other: "{0} seconds ago"
+                },
+                future: {
+                    one: "in {0} second",
+                    other: "in {0} seconds"
+                }
+            }
+        },
+        short: {
+            year: {
+                previous: "last yr",
+                current: "this yr",
+                next: "next yr",
+                past: "{0} yr ago",
+                future: "in {0} yr"
+            },
+            quarter: {
+                previous: "last qtr.",
+                current: "this qtr.",
+                next: "next qtr.",
+                past: "{0} qtr ago",
+                future: "in {0} qtr"
+            },
+            month: {
+                previous: "last mo",
+                current: "this mo",
+                next: "next mo",
+                past: "{0} mo ago",
+                future: "in {0} mo"
+            },
+            week: {
+                previous: "last wk",
+                current: "this wk",
+                next: "next wk",
+                past: "{0} wk ago",
+                future: "in {0} wk"
+            },
+            day: {
+                previous: "yesterday",
+                current: "today",
+                next: "tomorrow",
+                past: {
+                    one: "{0} day ago",
+                    other: "{0} days ago"
+                },
+                future: {
+                    one: "in {0} day",
+                    other: "in {0} days"
+                }
+            },
+            hour: {
+                current: "this hour",
+                past: "{0} hr ago",
+                future: "in {0} hr"
+            },
+            minute: {
+                current: "this minute",
+                past: "{0} min ago",
+                future: "in {0} min"
+            },
+            second: {
+                current: "now",
+                past: "{0} sec ago",
+                future: "in {0} sec"
+            }
+        },
+        narrow: {
+            year: {
+                previous: "last yr",
+                current: "this yr",
+                next: "next yr",
+                past: "{0} yr ago",
+                future: "in {0} yr"
+            },
+            quarter: {
+                previous: "last qtr.",
+                current: "this qtr.",
+                next: "next qtr.",
+                past: "{0} qtr ago",
+                future: "in {0} qtr"
+            },
+            month: {
+                previous: "last mo",
+                current: "this mo",
+                next: "next mo",
+                past: "{0} mo ago",
+                future: "in {0} mo"
+            },
+            week: {
+                previous: "last wk",
+                current: "this wk",
+                next: "next wk",
+                past: "{0} wk ago",
+                future: "in {0} wk"
+            },
+            day: {
+                previous: "yesterday",
+                current: "today",
+                next: "tomorrow",
+                past: {
+                    one: "{0} day ago",
+                    other: "{0} days ago"
+                },
+                future: {
+                    one: "in {0} day",
+                    other: "in {0} days"
+                }
+            },
+            hour: {
+                current: "this hour",
+                past: "{0} hr ago",
+                future: "in {0} hr"
+            },
+            minute: {
+                current: "this minute",
+                past: "{0} min ago",
+                future: "in {0} min"
+            },
+            second: {
+                current: "now",
+                past: "{0} sec ago",
+                future: "in {0} sec"
+            }
+        }
+      });
+    </script>
+    
+    <script>
+      const ctaColors = new Map([
+        ["Red", '#c60c30'],
+        ["Blue", '#00a1de'],
+        ["Brown", '#62361b'],
+        ["Green", '#009b3a'],
+        ["Orange", '#f9461c'],
+        ["P", '#522398'],
+        ["Pexp", '#522398'],
+        ["Pink", '#e27ea6'],
+        ["Yellow", '#f9e300'],
+      ]);
+    </script>
+
+    <script>
+      $(document).ready(function() {
+        $.getJSON('https://cta-delay-preds-ijzgin3xfq-uc.a.run.app/alerts', function(json_data) {
+          json_data.alerts.map(alert_ => {
+            var title = "<h3 class='card-header'> <span style='color:" + ctaColors.get(alert_.ServiceId) +"' >&#9673;</span> " + alert_.ServiceName + " Delay</h3>";
+            var subtitle = "<p class='card-text'>" + alert_.ShortDescription + "</p>";
+            var started_ago = new TimeAgo('en-IL').format(new Date(alert_.EventStart ));
+            var started = "<p class='card-text'>This delay started <b>" + started_ago + "</b>.</p>";
+            var duration = "<p class='card-text'>Delays like this usually last <b>" + alert_.Duration + "</b>.</p>";
+            $(".alerts").append("<div class='card mx-auto mt-2 mb-2' style='width:95%'>" + title + "<div class='card-body'>" + subtitle + started + duration + "</div></div>");
+          });
+        });
+      });
+
+
+
+    </script>
+  
+    <div class="jumbotron jumbotron-fluid">
+      <!-- <h1 class="display-4 text-center" style="font-family: Helvetica-bold">CTA Delays</h1> -->
+      <div class="alerts"></div>
+    </div>
+
+  </body>
+  
+</html>
