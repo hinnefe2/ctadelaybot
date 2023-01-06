@@ -8,11 +8,9 @@ RUN pip install -r requirements.txt
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 
-COPY .cache .cache
-ENV TRANSFORMERS_CACHE=.cache
-ENV HF_HOME=.cache
-
 COPY best_model.pt .
+COPY tokenizer.pt .
+COPY api.py .
 COPY service.py .
 
 CMD exec uvicorn service:app --host 0.0.0.0 --port ${PORT} --workers 1
