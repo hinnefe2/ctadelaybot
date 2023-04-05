@@ -10,7 +10,8 @@ from glom import glom, Coalesce, Literal
 
 
 CTA_ALERTS_URI = "http://lapi.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON"  # noqa
-TIMEOUT=0.2
+SEVERITY_THRESHOLD = 37
+TIMEOUT=5
 
 
 def _chicago_to_utc(timestamp):
@@ -84,13 +85,8 @@ def _filter_delays(alerts):
     """Select the subset of alerts which refer to delays."""
 
     def is_not_low_impact(alert):
-        """Returns true if the alert impact isn't from the minor categories."""
-
-        minors = ['Planned Reroute', 'Special Note', 'Bus Stop Relocation',
-                  'Added Service', 'Planned Work', 'Service Change',
-                  'Elevator Status', 'Bus Stop Note']
-
-        return alert.get('Impact') not in minors
+        """Returns true if the alert severity score is above the threshold."""
+        return alert.get('SeverityScore') > SEVERITY_THRESHOLD
 
     return list(filter(is_not_low_impact, alerts))
 
