@@ -1,7 +1,5 @@
 FROM python:3.10-slim
 
-COPY best_model.pt .
-COPY tokenizer.pt .
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt
@@ -10,6 +8,8 @@ RUN pip install -r requirements.txt
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 
+COPY best_model.pt .
+COPY tokenizer.pt .
 COPY api.py .
 COPY service.py .
 
