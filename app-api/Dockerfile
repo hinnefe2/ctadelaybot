@@ -1,5 +1,8 @@
 FROM python:3.10-slim
 
+ARG _MODEL_PATH
+ARG _MODEL_VERSION
+
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt
